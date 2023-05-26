@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
     /**
@@ -11,44 +9,51 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.Category);
     }
   }
-  Product.init({
-    title: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: "Title cannot be empty"
-        }
-      }
-    },
-    price: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: "Price cannot be empty"
+  Product.init(
+    {
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Title cannot be empty",
+          },
         },
-        isInt: true,
-        min: 0,
-        max: 50000000
-      }
-    },
-    stock: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: "Stock cannot be empty"
+      },
+      price: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Price cannot be empty",
+          },
+          isInt: true,
+          min: 0,
+          max: 50000000,
         },
-        isInt: true,
-        min: 5
-      }
+      },
+      stock: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "Stock cannot be empty",
+          },
+          isInt: true,
+          min: 5,
+        },
+      },
+      CategoryId: {
+        type: DataTypes.INTEGER,
+      },
     },
-  }, {
-    sequelize,
-    modelName: 'Product',
-  });
+    {
+      sequelize,
+      modelName: "Product",
+    }
+  );
   return Product;
 };
