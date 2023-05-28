@@ -1,4 +1,11 @@
 'use strict';
+const bcrypt = require('bcrypt');
+
+function hashPassword(password) {
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
+    return hash
+}
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -12,11 +19,11 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-
+    let password = hashPassword('123456')
     queryInterface.bulkInsert('Users', [{
       full_name: 'John Doe',
       email: 'John@mail.com',
-      password: '123456',
+      password: password,
       gender: 'male',
       role: 'admin',
       balance: 1000000,
