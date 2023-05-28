@@ -20,7 +20,7 @@ class ProductController {
     static async readProduct(req, res) {
         Product.findAll()
             .then((products) => {
-                res.status(200).json(products)
+                res.status(200).json({ products })
             })
             .catch((err) => {
                 res.status(500).json(err)
@@ -28,40 +28,47 @@ class ProductController {
     }
 
     static async updateProductById(req, res) {
-        const id = +req.params.productId
-        const { title, price, stock } = req.body
-        Product.update({
+        let id = +req.params.productId;
+        const { title, price, stok } = req.body;
+        let data = {
             title,
             price,
-            stock
-        }, {
+            stok
+        };
+        Product.update(data, {
             where: {
-                id
-            }
+                id,
+            },
+            returning: true,
         })
-            .then((product) => {
-                res.status(200).json(product)
+            .then((data) => {
+                res.status(200).json({
+                    "product": data[1][0]
+                });
             })
             .catch((err) => {
-                res.status(500).json(err)
-            })
+                res.status(500).json(err);
+            });
     }
 
     static async updateCategoryProduct(req, res) {
-        const id = +req.params.productId
+        let id = +req.params.productId
         const { CategoryId } = req.body
         Product.update({
             CategoryId
         }, {
             where: {
                 id
-            }
+            },
+            returning: true
         })
-            .then((product) => {
-                res.status(200).json(product)
+            .then((data) => {
+                res.status(200).json({
+                    "product": data[1][0]
+                });
             })
             .catch((err) => {
-                res.status(500).json(err)
+                res.status(500).json(err);
             })
     }
 
