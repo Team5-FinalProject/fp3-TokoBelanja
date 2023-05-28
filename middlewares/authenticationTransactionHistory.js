@@ -1,7 +1,7 @@
 const { User } = require("../models");
 const { verifyToken } = require("../helpers/jwt");
 
-function authenticationTransactionHistory(req, res, next) {
+function authenticationCategory(req, res, next) {
   try {
     const token = req.get("token");
     const userDecoded = verifyToken(token);
@@ -38,4 +38,4 @@ function authenticationTransactionHistory(req, res, next) {
   }
 }
 
-module.exports = authenticationTransactionHistory;
+module.exports = authenticationCategory;

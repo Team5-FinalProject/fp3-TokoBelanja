@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const TransactionHistory = require("../controllers/transactionHistoryController");
-const authentication = require("../middlewares/authentication");
+const authenticationTransactionHistory = require("../middlewares/authenticationTransactionHistory");
 
-router.use(authentication);
+router.use(authenticationTransactionHistory);
 
 router.post("/", TransactionHistory.createTransactionHistory);
 router.get("/user", TransactionHistory.getAllTransactionHistoryUsers);
