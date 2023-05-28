@@ -5,8 +5,9 @@ const {
   updateCategory,
   deleteCategory,
 } = require("../controllers/categoryController");
-const authentication = require("../middlewares/authentication");
+const authenticationCategory = require("../middlewares/authenticationCategory");
 
+router.use(authenticationCategory);
 router.patch("/:id", updateCategory);
 router.delete("/:id", deleteCategory);
 router.post("/", createCategory);

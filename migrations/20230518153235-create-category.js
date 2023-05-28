@@ -12,6 +12,7 @@ module.exports = {
       type: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
         validate: {
           notEmpty: {
             msg: "Type cannot be empty",
@@ -20,7 +21,7 @@ module.exports = {
       },
       sold_product_amount: {
         type: Sequelize.BIGINT,
-        allowNull: true,
+        allowNull: false,
         validate: {
           notEmpty: {
             msg: "Sold product amount cannot be empty",

@@ -1,7 +1,7 @@
 const { User } = require('../models');
 const { verifyToken } = require('../helpers/jwt');
 
-function authentication(req, res, next) {
+function authenticationCategory(req, res, next) {
     try {
         const token = req.get("token")
         const userDecoded = verifyToken(token)
@@ -18,6 +18,12 @@ function authentication(req, res, next) {
                         devMassage: `User with id ${userDecoded.id} not found`
                     })
                 }
+                if (user.role !== "admin") {
+                    return res.status(401).json({
+                        name: "Authentication Error",
+                        devMassage: `User with id ${userDecoded.id} not authorized`
+                    })
+                }
                 res.locals.user = user
                 return next()
             })
@@ -32,4 +38,4 @@ function authentication(req, res, next) {
     }
 }
 
-module.exports = authentication 
+module.exports = authenticationCategory 

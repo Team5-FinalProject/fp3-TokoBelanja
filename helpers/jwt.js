@@ -12,4 +12,4 @@ function verifyToken(token) {
     return decoded
 }
 
-module.exports = { generateToken }
+module.exports = { generateToken, verifyToken }

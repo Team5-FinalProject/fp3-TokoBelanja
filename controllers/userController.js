@@ -4,8 +4,7 @@ const { generateToken } = require("../helpers/jwt");
 
 class UserController {
   static async register(req, res) {
-    const { email, full_name, username, password, gender, role, balance } =
-      req.body;
+    const { email, full_name, username, password, gender, role, balance } = req.body;
     User.create({
       email,
       full_name,
@@ -58,10 +57,10 @@ class UserController {
           role: user.role,
         };
         const token = generateToken(payload);
-        return res.status(200).json(token);
+        return res.status(200).json({ "token": token });
       })
       .catch((err) => {
-        res.status(401).json({ message: "Invalid email/password" });
+        res.status(401).json({ err });
       });
   }
 
@@ -90,7 +89,7 @@ class UserController {
         });
       })
       .catch((err) => {
-        res.status(500).json({ message: err.errors[0].message });
+        res.status(500).json({ err });
       });
   }
 
@@ -113,8 +112,8 @@ class UserController {
 
   static async addBalance(req, res) {
     let id = res.locals.user.id;
-    let balance = res.locals.user.balance;
-    let addBalance = req.body.balance;
+    let balance = Number(res.locals.user.balance);
+    let addBalance = Number(req.body.balance);
     let updateBalance = balance + addBalance;
     User.update(
       { balance: updateBalance },

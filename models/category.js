@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       type: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
         validate: {
           notEmpty: {
             msg: "Type cannot be empty",
@@ -25,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       sold_product_amount: {
         type: DataTypes.BIGINT,
-        allowNull: true,
+        allowNull: false,
         validate: {
           notEmpty: {
             msg: "Sold product amount cannot be empty",
